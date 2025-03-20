@@ -29,6 +29,11 @@ const server = new Server(
   {
     name: "xpath-xslt-processor",
     version: "0.6.2"
+  },
+  {
+    capabilities: {
+        tools: {}
+    }
   }
 );
 
