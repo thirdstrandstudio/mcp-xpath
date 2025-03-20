@@ -23,7 +23,7 @@ const SelectArgumentsSchema = z.object({
 // Create server instance
 const server = new Server(
     {
-        name: "xpath",
+        name: "mcp_xpath",
         version: "0.6.2"
     },
     {
@@ -38,7 +38,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {
         tools: [
             {
-                name: "select",
+                name: "xpath",
                 description: "Select query XML content using XPath",
                 inputSchema: {
                     type: "object",
@@ -69,7 +69,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { name, arguments: args } = request.params;
 
     try {
-        if (name === "select") {
+        if (name === "xpath") {
             const { xml, query, mimeType } = SelectArgumentsSchema.parse(args);
 
             // Parse XML
