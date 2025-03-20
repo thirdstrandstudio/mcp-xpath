@@ -106,7 +106,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
             // Parse XML
             const parsedXml = parser.parseFromString(xml, mimeType);
-            const result = xpath.select(query, parsedXml)?.toString();
+            const result = xpath.select(query, parsedXml);
 
             return {
                 content: [{ type: "text", text: JSON.stringify(result) }]
@@ -124,7 +124,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             
             // Parse XML
             const parsedXml = parser.parseFromString(xml, mimeType);
-            const result = xpath.select(query, parsedXml)?.toString();
+            const result = xpath.select(query, parsedXml);
 
             return {
                 content: [{ type: "text", text: JSON.stringify(result) }]
