@@ -36,14 +36,14 @@ Add the following to your `claude_desktop_config.json`:
     "xpath": {
       "command": "node",
       "args": [
-        "/path/to/mcp-xslt/dist/index.js"
+        "/path/to/mcp-xpath/dist/index.js"
       ]
     }
   }
 }
 ```
 
-Replace `/path/to/mcp-xslt` with the actual path to your repository.
+Replace `/path/to/mcp-xpath` with the actual path to your repository.
 
 
 ## Examples
