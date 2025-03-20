@@ -109,7 +109,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             const result = xpath.select(query, parsedXml);
 
             return {
-                content: [{ type: "text", text: JSON.stringify(result?.toString()) }]
+                content: [{ type: "text", text: result?.toString() }]
             };
         } else if (name === "xpathwithurl") {
             const { url, query, mimeType } = XPathWithUrlArgumentsSchema.parse(args);
@@ -130,7 +130,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 const result = xpath.select(query, parsedXml);
                 
                 return {
-                    content: [{ type: "text", text: JSON.stringify(result?.toString()) }]
+                    content: [{ type: "text", text: result?.toString() }]
                 };
             } finally {
                 // Make sure to close the browser
