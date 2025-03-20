@@ -2,6 +2,9 @@
 
 MCP Server for executing XPath queries on XML content.
 
+![image](https://github.com/user-attachments/assets/369045f3-1cdb-4204-9c62-0f5f32636262)
+
+
 ## Tools
 
 1. `xpath`
