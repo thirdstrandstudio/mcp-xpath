@@ -1,14 +1,14 @@
 {
-  "name": "@modelcontextprotocol/server-xslt",
+  "name": "@modelcontextprotocol/server-xpath-xslt",
   "version": "0.6.2",
-  "description": "MCP server for xslt",
+  "description": "MCP server for xslt and xpath",
   "license": "MIT",
   "author": "Anthropic, PBC (https://anthropic.com)",
   "homepage": "https://modelcontextprotocol.io",
   "bugs": "https://github.com/modelcontextprotocol/servers/issues",
   "type": "module",
   "bin": {
-    "mcp-server-xslt": "dist/index.js"
+    "mcp-server-xpath-xslt": "dist/index.js"
   },
   "files": [
     "dist"
