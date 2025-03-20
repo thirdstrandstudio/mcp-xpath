@@ -7,7 +7,7 @@ import {
     ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import xpath from "xpath";
-import { DOMParser } from "@xmldom/xmldom";
+import { DOMParser, XMLSerializer } from "@xmldom/xmldom";
 import { z } from 'zod';
 import puppeteer from 'puppeteer';
 
@@ -42,6 +42,34 @@ const server = new Server(
     }
 );
 
+
+function resultToString(result: string | number | boolean | Node | Node[] | null): string {
+    if (result === null) {
+        return "null";
+    } else if (Array.isArray(result)) {
+        return result.map(resultToString).join("\n");
+    } else if (typeof result === 'object' && result.nodeType !== undefined) {
+        // Handle DOM nodes
+        if (result.nodeType === 1) { // Element node
+            const serializer = new XMLSerializer();
+            return serializer.serializeToString(result);
+        } else if (result.nodeType === 2) { // Attribute node
+            return `${result.nodeName}="${result.nodeValue}"`;
+        } else if (result.nodeType === 3) { // Text node
+            return result.nodeValue || "";
+        } else {
+            // Default fallback for other node types
+            try {
+                const serializer = new XMLSerializer();
+                return serializer.serializeToString(result);
+            } catch (e) {
+                return String(result);
+            }
+        }
+    } else {
+        return String(result);
+    }
+}
 // List available tools
 server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {
@@ -104,13 +132,36 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         if (name === "xpath") {
             const { xml, query, mimeType } = XPathArgumentsSchema.parse(args);
 
-            // Parse XML
-            const parsedXml = parser.parseFromString(xml, mimeType);
-            const result = xpath.select(query, parsedXml);
-
-            return {
-                content: [{ type: "text", text: result?.toString() }]
-            };
+            try {
+                // Parse XML
+                const parsedXml = parser.parseFromString(xml, mimeType);
+                
+                // Check for parsing errors
+                const errors = xpath.select('//parsererror', parsedXml);
+                if (Array.isArray(errors) && errors.length > 0) {
+                    return {
+                        content: [{ type: "text", text: "XML parsing error: " + resultToString(errors[0]) }]
+                    };
+                }
+                
+                const result = xpath.select(query, parsedXml);
+                
+                // If result is an empty array, provide more information
+                if (Array.isArray(result) && result.length === 0) {
+                    return {
+                        content: [{ type: "text", text: "No nodes matched the query." }]
+                    };
+                }
+                
+                return {
+                    content: [{ type: "text", text: resultToString(result) }]
+                };
+            } catch (error: unknown) {
+                const errorMessage = error instanceof Error ? error.message : String(error);
+                return {
+                    content: [{ type: "text", text: `Error processing XPath query: ${errorMessage}` }]
+                };
+            }
         } else if (name === "xpathwithurl") {
             const { url, query, mimeType } = XPathWithUrlArgumentsSchema.parse(args);
             
@@ -127,10 +178,31 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 
                 // Parse XML
                 const parsedXml = parser.parseFromString(xml, mimeType);
+                
+                // Check for parsing errors
+                const errors = xpath.select('//parsererror', parsedXml);
+                if (Array.isArray(errors) && errors.length > 0) {
+                    return {
+                        content: [{ type: "text", text: "XML parsing error: " + resultToString(errors[0]) }]
+                    };
+                }
+                
                 const result = xpath.select(query, parsedXml);
                 
+                // If result is an empty array, provide more information
+                if (Array.isArray(result) && result.length === 0) {
+                    return {
+                        content: [{ type: "text", text: "No nodes matched the query." }]
+                    };
+                }
+                
                 return {
-                    content: [{ type: "text", text: result?.toString() }]
+                    content: [{ type: "text", text: resultToString(result) }]
+                };
+            } catch (error: unknown) {
+                const errorMessage = error instanceof Error ? error.message : String(error);
+                return {
+                    content: [{ type: "text", text: `Error processing XPath query: ${errorMessage}` }]
                 };
             } finally {
                 // Make sure to close the browser
