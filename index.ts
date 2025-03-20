@@ -9,7 +9,7 @@ import {
 import xpath from "xpath";
 import { DOMParser } from "@xmldom/xmldom";
 import { z } from 'zod';
-import fetch from 'node-fetch';
+import puppeteer from 'puppeteer';
 
 const parser = new DOMParser();
 
@@ -109,26 +109,33 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             const result = xpath.select(query, parsedXml);
 
             return {
-                content: [{ type: "text", text: JSON.stringify(result) }]
+                content: [{ type: "text", text: JSON.stringify(result?.toString()) }]
             };
         } else if (name === "xpathwithurl") {
             const { url, query, mimeType } = XPathWithUrlArgumentsSchema.parse(args);
             
-            // Fetch content from URL
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Failed to fetch URL: ${response.status} ${response.statusText}`);
+            // Launch puppeteer browser
+            const browser = await puppeteer.launch({ headless: true });
+            const page = await browser.newPage();
+            
+            try {
+                // Navigate to the URL and wait until network is idle
+                await page.goto(url, { waitUntil: 'networkidle0' });
+                
+                // Get the rendered HTML
+                const xml = await page.content();
+                
+                // Parse XML
+                const parsedXml = parser.parseFromString(xml, mimeType);
+                const result = xpath.select(query, parsedXml);
+                
+                return {
+                    content: [{ type: "text", text: JSON.stringify(result?.toString()) }]
+                };
+            } finally {
+                // Make sure to close the browser
+                await browser.close();
             }
-            
-            const xml = await response.text();
-            
-            // Parse XML
-            const parsedXml = parser.parseFromString(xml, mimeType);
-            const result = xpath.select(query, parsedXml);
-
-            return {
-                content: [{ type: "text", text: JSON.stringify(result) }]
-            };
         } else {
             throw new Error(`Unknown tool: ${name}`);
         }
