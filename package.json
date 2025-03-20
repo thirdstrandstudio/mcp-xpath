@@ -1,11 +1,11 @@
 {
-  "name": "@modelcontextprotocol/server-xpath",
+  "name": "@jayarrowz/server-xpath",
   "version": "0.6.2",
   "description": "MCP server for xpath",
   "license": "MIT",
-  "author": "Anthropic, PBC (https://anthropic.com)",
-  "homepage": "https://modelcontextprotocol.io",
-  "bugs": "https://github.com/modelcontextprotocol/servers/issues",
+  "author": "JayArrowz (https://github.com/JayArrowz)",
+  "homepage": "https://github.com/JayArrowz/mcp-xpath",
+  "bugs": "https://github.com/JayArrowz/mcp-xpath/issues",
   "type": "module",
   "bin": {
     "mcp-server-xpath": "dist/index.js"
