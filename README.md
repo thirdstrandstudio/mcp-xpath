@@ -28,6 +28,21 @@ npm run build
 
 Add the following to your `claude_desktop_config.json`:
 
+#### npx
+
+```json
+{
+  "mcpServers": {
+    "xpath": {
+      "command": "npx",
+      "args": [
+        "@jayarrowz/mcp-xpath"
+      ]
+    }
+  }
+}
+```
+
 #### Direct Node.js
 
 ```json
