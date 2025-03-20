@@ -1,92 +1,86 @@
-# MCP XSLT Server
+# XPath MCP Server
 
-A Model Context Protocol (MCP) server for XML transformations and XPath queries.
+MCP Server for executing XPath queries on XML content.
 
-## Features
+## Tools
 
-- Transform XML using XSLT stylesheets
-- Execute XPath queries on XML documents
-- Compatible with the Model Context Protocol (MCP)
+1. `select`
+   - Query XML content using XPath expressions
+   - Inputs:
+     - `xml` (string): The XML content to query
+     - `query` (string): The XPath query to execute
+     - `mimeType` (optional, string): The MIME type (e.g. text/xml, application/xml, text/html, application/xhtml+xml)
+   - Returns: The result of the XPath query as a string
 
 ## Installation
 
 ```bash
-npm install @modelcontextprotocol/server-xslt
-```
+# Install dependencies
+npm install
 
-## Usage
-
-### As a CLI tool
-
-```bash
-npx mcp-server-xslt
-```
-
-## MCP Tools
-
-The server implements two MCP tools:
-
-### transform
-
-Transform XML using an XSLT stylesheet.
-
-Parameters:
-- `xml`: The XML content to transform
-- `xslt`: The XSLT stylesheet to apply
-
-Example:
-```json
-{
-  "name": "transform",
-  "params": {
-    "xml": "<root><item>value</item></root>",
-    "xslt": "<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\"><xsl:template match=\"/\"><result><xsl:value-of select=\"/root/item\"/></result></xsl:template></xsl:stylesheet>"
-  }
-}
-```
-
-### xpath
-
-Execute an XPath query on XML content.
-
-Parameters:
-- `xml`: The XML content to query
-- `query`: The XPath query to execute
-
-Example:
-```json
-{
-  "name": "xpath",
-  "params": {
-    "xml": "<root><item>value</item></root>",
-    "query": "/root/item/text()"
-  }
-}
-```
-
-## Development
-
-### Running Tests
-
-```bash
-npm test
-```
-
-### Building the Package
-
-```bash
+# Build the package
 npm run build
 ```
 
-## Implementation Details
+## Setup
 
-This server is built using:
+### Usage with Claude Desktop
 
-- The Model Context Protocol TypeScript SDK
-- `xslt-processor` library for XML processing and XSLT transformations
-- Zod for parameter validation
+Add the following to your `claude_desktop_config.json`:
+
+#### Direct Node.js
+
+```json
+{
+  "mcpServers": {
+    "xpath": {
+      "command": "node",
+      "args": [
+        "/path/to/mcp-xslt/dist/index.js"
+      ]
+    }
+  }
+}
+```
+
+Replace `/path/to/mcp-xslt` with the actual path to your repository.
+
+
+## Examples
+
+### Query XML content
+
+```javascript
+// Select all <item> elements from XML
+const result = await callTool("select", {
+  xml: "<root><item>value1</item><item>value2</item></root>",
+  query: "//item/text()",
+  mimeType: "text/xml"
+});
+```
+
+### Query HTML content
+
+```javascript
+// Get all links from HTML
+const result = await callTool("select", {
+  xml: "<html><body><a href='link1.html'>Link 1</a><a href='link2.html'>Link 2</a></body></html>",
+  query: "//a/@href",
+  mimeType: "text/html"
+});
+```
+
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start the server in development mode
+npm start
+```
 
 ## License
 
-MIT
- 
+This MCP server is licensed under the MIT License. This means you are free to use, modify, and distribute the software, subject to the terms and conditions of the MIT License. For more details, please see the LICENSE file in the project repository. 
