@@ -1,6 +1,6 @@
 {
   "name": "@jayarrowz/mcp-xpath",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "MCP server for xpath",
   "license": "MIT",
   "author": "JayArrowz (https://github.com/JayArrowz)",
@@ -22,6 +22,7 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.7.0",
     "@xmldom/xmldom": "0.8.10",
+    "node-fetch": "^3.3.2",
     "xpath": "^0.0.34",
     "zod": "^3.24.2"
   },

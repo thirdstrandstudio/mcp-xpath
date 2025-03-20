@@ -4,10 +4,18 @@ MCP Server for executing XPath queries on XML content.
 
 ## Tools
 
-1. `select`
+1. `xpath`
    - Query XML content using XPath expressions
    - Inputs:
      - `xml` (string): The XML content to query
+     - `query` (string): The XPath query to execute
+     - `mimeType` (optional, string): The MIME type (e.g. text/xml, application/xml, text/html, application/xhtml+xml)
+   - Returns: The result of the XPath query as a string
+
+2. `xpathwithurl`
+   - Fetch content from a URL and query it using XPath expressions
+   - Inputs:
+     - `url` (string): The URL to fetch XML/HTML content from
      - `query` (string): The XPath query to execute
      - `mimeType` (optional, string): The MIME type (e.g. text/xml, application/xml, text/html, application/xhtml+xml)
    - Returns: The result of the XPath query as a string
@@ -85,6 +93,16 @@ const result = await callTool("xpath", {
 });
 ```
 
+### Query URL content
+
+```javascript
+// Get all links from a webpage
+const result = await callTool("xpathwithurl", {
+  url: "https://example.com",
+  query: "//a/@href",
+  mimeType: "text/html"
+});
+```
 
 ## Development
 
@@ -98,4 +116,4 @@ npm start
 
 ## License
 
-This MCP server is licensed under the MIT License. This means you are free to use, modify, and distribute the software, subject to the terms and conditions of the MIT License. For more details, please see the LICENSE file in the project repository. 
+This MCP server is licensed under the MIT License. This means you are free to use, modify, and distribute the software, subject to the terms and conditions of the MIT License. For more details, please see the LICENSE file in the project repository.

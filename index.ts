@@ -9,11 +9,20 @@ import {
 import xpath from "xpath";
 import { DOMParser } from "@xmldom/xmldom";
 import { z } from 'zod';
+import fetch from 'node-fetch';
 
 const parser = new DOMParser();
 
-const SelectArgumentsSchema = z.object({
+const XPathArgumentsSchema = z.object({
     xml: z.string().describe("The XML content to query"),
+    query: z.string().describe("The XPath query to execute"),
+    mimeType: z.string()
+    .describe("The MIME type (e.g. text/xml, application/xml, text/html, application/xhtml+xml)")
+    .default("text/html")
+});
+
+const XPathWithUrlArgumentsSchema = z.object({
+    url: z.string().url().describe("The URL to fetch XML/HTML content from"),
     query: z.string().describe("The XPath query to execute"),
     mimeType: z.string()
     .describe("The MIME type (e.g. text/xml, application/xml, text/html, application/xhtml+xml)")
@@ -59,6 +68,29 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                     },
                     required: ["xml", "query"],
                 },
+            },
+            {
+                name: "xpathwithurl",
+                description: "Fetch content from a URL and select query it using XPath",
+                inputSchema: {
+                    type: "object",
+                    properties: {
+                        url: {
+                            type: "string",
+                            description: "The URL to fetch XML/HTML content from",
+                        },
+                        query: {
+                            type: "string",
+                            description: "The XPath query to execute",
+                        },
+                        mimeType: {
+                            type: "string",
+                            description: "The MIME type (e.g. text/xml, application/xml, text/html, application/xhtml+xml)",
+                            default: "text/html"
+                        }
+                    },
+                    required: ["url", "query"],
+                },
             }
         ],
     };
@@ -70,8 +102,26 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
     try {
         if (name === "xpath") {
-            const { xml, query, mimeType } = SelectArgumentsSchema.parse(args);
+            const { xml, query, mimeType } = XPathArgumentsSchema.parse(args);
 
+            // Parse XML
+            const parsedXml = parser.parseFromString(xml, mimeType);
+            const result = xpath.select(query, parsedXml)?.toString();
+
+            return {
+                content: [{ type: "text", text: JSON.stringify(result) }]
+            };
+        } else if (name === "xpathwithurl") {
+            const { url, query, mimeType } = XPathWithUrlArgumentsSchema.parse(args);
+            
+            // Fetch content from URL
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch URL: ${response.status} ${response.statusText}`);
+            }
+            
+            const xml = await response.text();
+            
             // Parse XML
             const parsedXml = parser.parseFromString(xml, mimeType);
             const result = xpath.select(query, parsedXml)?.toString();
