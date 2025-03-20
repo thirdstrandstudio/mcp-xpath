@@ -67,7 +67,7 @@ Replace `/path/to/mcp-xpath` with the actual path to your repository.
 
 ```javascript
 // Select all <item> elements from XML
-const result = await callTool("select", {
+const result = await callTool("xpath", {
   xml: "<root><item>value1</item><item>value2</item></root>",
   query: "//item/text()",
   mimeType: "text/xml"
@@ -78,7 +78,7 @@ const result = await callTool("select", {
 
 ```javascript
 // Get all links from HTML
-const result = await callTool("select", {
+const result = await callTool("xpath", {
   xml: "<html><body><a href='link1.html'>Link 1</a><a href='link2.html'>Link 2</a></body></html>",
   query: "//a/@href",
   mimeType: "text/html"
