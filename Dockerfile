@@ -16,6 +16,8 @@ COPY . .
 # Build the project
 RUN npm run build
 
+RUN npx puppeteer browsers install chrome
+
 # Expose no port (stdio)
 
 # Run the MCP server
