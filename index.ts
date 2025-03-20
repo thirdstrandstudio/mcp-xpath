@@ -15,7 +15,9 @@ const parser = new DOMParser();
 const SelectArgumentsSchema = z.object({
     xml: z.string().describe("The XML content to query"),
     query: z.string().describe("The XPath query to execute"),
-    mimeType: z.string().describe("The MIME type (e.g. text/xml, application/xml, text/html, application/xhtml+xml)")
+    mimeType: z.string()
+    .describe("The MIME type (e.g. text/xml, application/xml, text/html, application/xhtml+xml)")
+    .default("text/html")
 });
 
 // Create server instance
