@@ -134,7 +134,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
             try {
                 // Parse XML
-                const parsedXml = parser.parseFromString(xml, mimeType);
+                const firstOpeningTag = xml.indexOf("<");
+                const lastClosingTag = xml.lastIndexOf(">");
+                const sanitizedXml = xml.substring(firstOpeningTag, lastClosingTag + 1);
+                const parsedXml = parser.parseFromString(sanitizedXml, mimeType);
                 
                 // Check for parsing errors
                 const errors = xpath.select('//parsererror', parsedXml);
