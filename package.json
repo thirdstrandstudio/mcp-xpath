@@ -1,11 +1,11 @@
 {
-  "name": "@jayarrowz/mcp-xpath",
-  "version": "0.6.9",
+  "name": "@thirdstrandstudio/mcp-xpath",
+  "version": "0.7.0",
   "description": "MCP server for xpath",
   "license": "MIT",
-  "author": "JayArrowz (https://github.com/JayArrowz)",
-  "homepage": "https://github.com/JayArrowz/mcp-xpath",
-  "bugs": "https://github.com/JayArrowz/mcp-xpath/issues",
+  "author": "Third Strand Studio LLC (https://github.com/thirdstrandstudio)",
+  "homepage": "https://github.com/thirdstrandstudio/mcp-xpath",
+  "bugs": "https://github.com/thirdstrandstudio/mcp-xpath/issues",
   "type": "module",
   "bin": {
     "mcp-xpath": "dist/index.js"

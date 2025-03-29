@@ -1,10 +1,13 @@
 # XPath MCP Server
 
+[![Third Strand Studio](https://img.shields.io/badge/Third%20Strand%20Studio-Visit%20Us-blue)](https://thirdstrandstudio.com)
+
+
 MCP Server for executing XPath queries on XML content.
 
 ![image](https://github.com/user-attachments/assets/369045f3-1cdb-4204-9c62-0f5f32636262)
 
-[![smithery badge](https://smithery.ai/badge/@JayArrowz/mcp-xpath)](https://smithery.ai/server/@JayArrowz/mcp-xpath)
+[![smithery badge](https://smithery.ai/badge/@thirdstrandstudio/mcp-xpath)](https://smithery.ai/server/@thirdstrandstudio/mcp-xpath)
 
 ## Tools
 
@@ -28,10 +31,10 @@ MCP Server for executing XPath queries on XML content.
 
 ### Installing via Smithery
 
-To install mcp-xpath for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@JayArrowz/mcp-xpath):
+To install mcp-xpath for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@thirdstrandstudio/mcp-xpath):
 
 ```bash
-npx -y @smithery/cli install @JayArrowz/mcp-xpath --client claude
+npx -y @smithery/cli install @thirdstrandstudio/mcp-xpath --client claude
 ```
 
 ```bash
@@ -56,7 +59,7 @@ Add the following to your `claude_desktop_config.json`:
     "xpath": {
       "command": "npx",
       "args": [
-        "@jayarrowz/mcp-xpath"
+        "@thirdstrandstudio/mcp-xpath"
       ]
     }
   }
