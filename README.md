@@ -2,8 +2,11 @@
 
 [![Third Strand Studio](https://img.shields.io/badge/Third%20Strand%20Studio-Visit%20Us-blue)](https://thirdstrandstudio.com)
 
-
 MCP Server for executing XPath queries on XML content.
+
+<a href="https://glama.ai/mcp/servers/@thirdstrandstudio/mcp-xpath">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@thirdstrandstudio/mcp-xpath/badge" alt="mcp-xpath MCP server" />
+</a>
 
 ![image](https://github.com/user-attachments/assets/369045f3-1cdb-4204-9c62-0f5f32636262)
 
