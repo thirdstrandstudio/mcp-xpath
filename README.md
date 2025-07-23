@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/thirdstrandstudio-mcp-xpath-badge.png)](https://mseep.ai/app/thirdstrandstudio-mcp-xpath)
+
 # XPath MCP Server
 
 [![Third Strand Studio](https://img.shields.io/badge/Third%20Strand%20Studio-Visit%20Us-blue)](https://thirdstrandstudio.com)
