@@ -2,7 +2,7 @@
 
 # XPath MCP Server
 
-[![Third Strand Studio](https://img.shields.io/badge/Third%20Strand%20Studio-Visit%20Us-blue)](https://thirdstrandstudio.com)
+[![Third Strand Studio](https://img.shields.io/badge/Third%20Strand%20Studio-Visit%20Us-blue)](https://tss.topiray.com)
 
 MCP Server for executing XPath queries on XML content.
 
