@@ -12,7 +12,7 @@ MCP Server for executing XPath queries on XML content.
 
 ![image](https://github.com/user-attachments/assets/369045f3-1cdb-4204-9c62-0f5f32636262)
 
-[![smithery badge](https://smithery.ai/badge/@thirdstrandstudio/mcp-xpath)](https://smithery.ai/server/@thirdstrandstudio/mcp-xpath)
+[![LightNow capabilities](https://lightnow.ai/badge/io.github.thirdstrandstudio/mcp-xpath)](https://lightnow.ai/servers/io.github.thirdstrandstudio/mcp-xpath)
 
 ## Tools
 
